@@ -22,13 +22,13 @@ namespace PhotoAlbum
 
         static void Main(string[] args)
         {
-            var valid = false;
-
             do
             {
+                var valid = false;
+
                 while (!valid) //Will run until a valid int is entered.
                 {
-                    Console.Write(@"Please enter an Album ID: ");
+                    Console.Write("\nPlease enter an Album ID: ");
 
                     string input = Console.ReadLine();
                     int id;
@@ -50,7 +50,7 @@ namespace PhotoAlbum
 
         static void GetPhotosByAlbumId(int id)
         {
-            Console.WriteLine("> photo-album " + id);
+            Console.WriteLine("\n> photo-album " + id);
 
             UriBuilder builder = new UriBuilder("https://jsonplaceholder.typicode.com/photos");
             builder.Query = "albumId=" + id;
