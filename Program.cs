@@ -3,11 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace PhotoAlbum
 {
-
     public class Photo
     {
         public Int32 AlbumId { get; set; }
@@ -17,6 +15,7 @@ namespace PhotoAlbum
         public string ThumbnailUrl { get; set; }
 
     }
+
     class Program
     {
         private static readonly HttpClient client = new HttpClient();
@@ -24,6 +23,7 @@ namespace PhotoAlbum
         static void Main(string[] args)
         {
             var valid = false;
+
             do
             {
                 while (!valid) //Will run until a valid int is entered.
@@ -40,11 +40,11 @@ namespace PhotoAlbum
                     }
                     else
                     {
-                        Console.WriteLine("\""+input +"\" is not a valid number...\n");
+                        Console.WriteLine("\"" + input + "\" is not a valid number...\n");
                     }
                 }
             }
-            while (SearchAgain());
+            while (SearchAgain()); //Runs again if user types "Y"
             
         }
 
@@ -67,7 +67,6 @@ namespace PhotoAlbum
             }
         }
 
-
         static public bool SearchAgain()
         {
             //If user inputs "Y" then search again, otherwise close application
@@ -79,8 +78,5 @@ namespace PhotoAlbum
                 return answer == "Y" ? true : false; //used ternary operator here because I think it looks cleaner.
             }
         }
-
-
-
     }
 }
