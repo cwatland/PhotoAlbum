@@ -8,8 +8,8 @@ namespace PhotoAlbum
 {
     public class Photo
     {
-        public Int32 AlbumId { get; set; }
-        public Int32 Id { get; set; }
+        public int AlbumId { get; set; }
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Url { get; set; }
         public string ThumbnailUrl { get; set; }
@@ -18,25 +18,38 @@ namespace PhotoAlbum
 
     class Program
     {
-        private static readonly HttpClient client = new HttpClient();
+        //private static readonly HttpClient client = new HttpClient();
 
         static void Main(string[] args)
         {
+            var photoService = new PhotoService();
+
             do
             {
-                var valid = false;
+                bool valid = false;
 
                 while (!valid) //Will run until a valid int is entered.
                 {
                     Console.Write("\nPlease enter an Album ID: ");
 
                     string input = Console.ReadLine();
-                    int id;
 
-                    if (int.TryParse(input, out id))
+                    if (int.TryParse(input, out int id))
                     {
                         valid = true;
-                        GetPhotosByAlbumId(id);
+                        var photos = photoService.GetPhotosByAlbumId(id);
+
+                        if (photos.Count > 0)
+                        {
+                            foreach (var photo in photos)
+                            {
+                                Console.WriteLine($"[{photo.Id}] {photo.Title}");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("\nNo photos were found having an ID of \"" + id + "\"...\n");
+                        }
                     }
                     else
                     {
@@ -48,35 +61,30 @@ namespace PhotoAlbum
             
         }
 
-        static void GetPhotosByAlbumId(int id)
-        {
-            Console.WriteLine("\n> photo-album " + id);
+        //static void GetPhotosByAlbumId(int id)
+        //{
 
-            UriBuilder builder = new UriBuilder("https://jsonplaceholder.typicode.com/photos");
-            builder.Query = "albumId=" + id;
+        //    Console.WriteLine("\n> photo-album " + id);
 
-            var result = client.GetAsync(builder.Uri).Result;
+        //    UriBuilder builder = new UriBuilder("https://jsonplaceholder.typicode.com/photos")
+        //    {
+        //        Query = "albumId=" + id
+        //    };
 
-            using StreamReader sr = new StreamReader(result.Content.ReadAsStreamAsync().Result);
-            string response = sr.ReadToEnd();
-            List<Photo> photos = JsonConvert.DeserializeObject<List<Photo>>(response);
+        //    var result = client.GetAsync(builder.Uri).Result;
 
-            foreach (var photo in photos)
-            {
-                Console.WriteLine("[" + photo.Id + "] " + photo.Title);
-            }
-        }
+        //    using StreamReader sr = new StreamReader(result.Content.ReadAsStreamAsync().Result);
+        //    string response = sr.ReadToEnd();
+        //    List<Photo> photos = JsonConvert.DeserializeObject<List<Photo>>(response);
+
+        //}
 
         static public bool SearchAgain()
         {
-            //If user inputs "Y" then search again, otherwise close application
-            while (true)
-            {
-                Console.Write("\nDo you want to search again [Y/n]?");
-                string answer = Console.ReadLine().ToUpper();
+            Console.Write("\nDo you want to search again [Y/n]?");
+            string answer = Console.ReadLine().ToUpper();
 
-                return answer == "Y" ? true : false; //used ternary operator here because I think it looks cleaner.
-            }
+            return answer == "Y";
         }
     }
 }

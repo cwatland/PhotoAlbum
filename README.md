@@ -1,8 +1,23 @@
 # PhotoAlbum
 
-Console application I designed to display photo IDs and Titles from a specified album.
+## Table of Contents:
+* [General Info](#general-info)
+* [Setup](#setup)
 
-## How to run:
 
-- Build the project and run the PhotoAlbum.exe that is created.
-- Enter in an AlbumID (must be an integer).
+
+## General Info
+
+A console application I designed to display photo IDs and Titles from their respective albums.
+
+## Setup
+
+### Requirements
+
+* .NET 5.0
+
+### How to run
+
+* Build the project and run the PhotoAlbum.exe that is created.
+* When prompted, enter in an ID of the album you want to see the records for.
+
