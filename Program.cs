@@ -1,28 +1,13 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Net.Http;
 
 namespace PhotoAlbum
 {
-    public class Photo
-    {
-        public int AlbumId { get; set; }
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public string Url { get; set; }
-        public string ThumbnailUrl { get; set; }
-
-    }
-
     class Program
     {
-        //private static readonly HttpClient client = new HttpClient();
-
         static void Main(string[] args)
         {
-            var photoService = new PhotoService();
+            IPhotoService photoService = new PhotoService();
 
             do
             {
@@ -37,6 +22,7 @@ namespace PhotoAlbum
                     if (int.TryParse(input, out int id))
                     {
                         valid = true;
+                        
                         var photos = photoService.GetPhotosByAlbumId(id);
 
                         if (photos.Count > 0)
@@ -60,24 +46,6 @@ namespace PhotoAlbum
             while (SearchAgain()); //Runs again if user types "Y"
             
         }
-
-        //static void GetPhotosByAlbumId(int id)
-        //{
-
-        //    Console.WriteLine("\n> photo-album " + id);
-
-        //    UriBuilder builder = new UriBuilder("https://jsonplaceholder.typicode.com/photos")
-        //    {
-        //        Query = "albumId=" + id
-        //    };
-
-        //    var result = client.GetAsync(builder.Uri).Result;
-
-        //    using StreamReader sr = new StreamReader(result.Content.ReadAsStreamAsync().Result);
-        //    string response = sr.ReadToEnd();
-        //    List<Photo> photos = JsonConvert.DeserializeObject<List<Photo>>(response);
-
-        //}
 
         static public bool SearchAgain()
         {
