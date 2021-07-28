@@ -13,7 +13,7 @@ namespace PhotoAlbum
             {
                 bool valid = false;
 
-                while (!valid) //Will run until a valid int is entered.
+                while (!valid)
                 {
                     Console.Write("\nPlease enter an Album ID: ");
 
@@ -34,16 +34,16 @@ namespace PhotoAlbum
                         }
                         else
                         {
-                            Console.WriteLine("\nNo photos were found having an ID of \"" + id + "\"...\n");
+                            Console.WriteLine($"\nNo photos were found having an ID of '{id}'...");
                         }
                     }
                     else
                     {
-                        Console.WriteLine("\"" + input + "\" is not a valid number...\n");
+                        Console.WriteLine($"'{input}' is not a valid number...\n");
                     }
                 }
             }
-            while (SearchAgain()); //Runs again if user types "Y"
+            while (SearchAgain());
             
         }
 
